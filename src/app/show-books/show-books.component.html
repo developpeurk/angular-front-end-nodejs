@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-10 col-offset-2 mt-2">
+      <label>Keyword: </label>
+      <input type="text" placeholder="enter your keyword" name="kw" [(ngModel)]="searchText">
+    </div>
+       <div class="mt-2 mb-2">
+        <button class="btn btn-primary" (click)="onClickModal()">Add a book</button>
+       </div>
+      <table class="table table-striped">
+          <thead>
+             <tr>
+               <th>Author</th><th>Title</th><th>Price</th><th>Quantity</th><th>Available</th><th>Published At</th>
+             </tr>
+          </thead>
+        <tbody *ngIf="book">
+        <tr *ngFor="let b of book.docs | filter:searchText | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+
+          <td>{{ b.author}}</td>
+          <td>{{ b.title}}</td>
+          <td>{{ b.price | currency}}</td>
+          <td>{{ b.quantity}}</td>
+          <td>{{ b.available ? 'Available' : 'Out of Stock'}}</td>
+          <td>{{ b.publishingDate | date}}</td>
+        </tr>
+        </tbody>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+      </table>
+
+  </div>
+</div>
